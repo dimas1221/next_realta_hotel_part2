@@ -1,0 +1,77 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: 'Poppins';
+    background-color: #F1F1F1;
+    /* font-family: 'Poppins', sans-serif; */
+
+
+  }
+}
+
+@layer components {
+  .card {
+    @apply
+    bg-white text-gray-700
+    
+    shadow-lg rounded-md overflow-hidden
+  }
+
+  .card2 {
+    @apply
+    bg-white text-gray-700
+    w-full 
+    shadow-lg rounded-md overflow-hidden
+  }
+
+ .badge {
+    @apply
+     rounded-full text-xs
+  }
+  /* .badgeR {
+    @apply
+    px-3 py-1 rounded-full text-xs 
+  }  */
+
+  .hotel-title{
+    @apply
+    font-semibold text-2xl
+    overflow-ellipsis overflow-hidden whitespace-nowrap 
+  }
+
+  .button-primary{
+    @apply
+    bg-[#131828] hover:bg-[#1C2953]
+    px-6 py-2 rounded-md
+    text-white font-medium
+    tracking-wider transition
+  }
+
+  .button-primary1{
+    @apply
+    bg-[#131828] hover:bg-[#1C2953]
+    px-3 py-2 rounded-md
+    text-white text-xs
+    tracking-wider transition
+    
+  }
+
+  .button-icon {
+    @apply
+    flex-grow
+    flex justify-center items-center 
+  }
+}
+
+
+
