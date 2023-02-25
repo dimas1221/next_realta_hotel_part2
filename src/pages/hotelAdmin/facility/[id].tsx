@@ -27,7 +27,10 @@ import {
 import { ColumnType } from "antd/es/table";
 import { HiPhoto } from "react-icons/hi2";
 import { GoHistory } from "react-icons/go";
-import { doHotelAdminReq } from "@/redux/action/actionHotelAdmin";
+import {
+  doAddrSearchReq,
+  doHotelAdminReq,
+} from "@/redux/action/actionHotelAdmin";
 import { IoIosBed } from "react-icons/io";
 import dayjs from "dayjs";
 
@@ -54,28 +57,34 @@ export default function Faci() {
   const dataAddr = useSelector(
     (state: any) => state.AddrHotelReducer.HotelAddr
   );
+  console.log("data addr", dataAddr);
   const dataAddrById = dataAddr?.find((temp: any) => temp.hotel_addr_id == id);
-
-  const [hotelName, setHotelname] = useState("a");
-  const [hotelDate, setHotelDate] = useState("a");
-  const [hotelRating, setHotelRating] = useState(1);
-  const [hotelPlace, setHotelPlace] = useState("c");
+  console.log("addr", dataAddrById);
+  const [hotelName, setHotelname] = useState("");
+  console.log("ho", hotelName);
+  const [hotelDate, setHotelDate] = useState("");
+  console.log("da", hotelDate);
+  const [hotelRating, setHotelRating] = useState(0);
+  console.log("ra", hotelRating);
+  const [hotelPlace, setHotelPlace] = useState("");
+  console.log("pla", hotelPlace);
   useEffect(() => {
     if (dataHotelOne) {
-      setHotelname(dataHotelOne.hotelName);
-      setHotelDate(dataHotelOne.hotelModifiedDate);
-      setHotelRating(dataHotelOne.hotelRatingStar);
+      setHotelname(dataHotelOne?.hotelName);
+      setHotelDate(dataHotelOne?.hotelModifiedDate);
+      setHotelRating(dataHotelOne?.hotelRatingStar);
     }
   }, [dataHotelOne]);
   useEffect(() => {
     if (dataAddrById) {
-      setHotelPlace(dataAddrById.place);
+      setHotelPlace(dataAddrById?.place);
     }
   }, [dataAddrById]);
   useEffect(() => {
     dispatch(doFaciAdminReq());
     dispatch(doMaxRoomIdReq());
     dispatch(doHotelAdminReq());
+    dispatch(doAddrSearchReq());
   }, []);
 
   // dropdown
@@ -537,23 +546,26 @@ export default function Faci() {
           </span>
           <div>
             <span className="text-3xl font-bold ml-3">
-              {dataHotelOne?.hotelName}
+              {hotelName}
+              {/* {dataHotelOne?.hotelName} */}
             </span>
           </div>
         </div>
         <div className="">
           <span className="text-base text-gray-700 font-bold">
-            {dayjs(dataHotelOne?.hotelModifiedDate).format(
+            {dayjs(hotelDate).format("DD MMMM YYYY hh:mm:ss")}
+            {/* {dayjs(dataHotelOne?.hotelModifiedDate).format(
               "DD MMMM YYYY hh:mm:ss"
-            )}
+            )} */}
           </span>
           <p className="flex justify-start">
-            <Rate disabled defaultValue={dataHotelOne?.hotelRatingStar} />
+            {/* <Rate disabled defaultValue={dataHotelOne?.hotelRatingStar} /> */}
+            {/* <Rate disabled defaultValue={hotelRating} /> */}
           </p>
         </div>
       </div>
       <p className="flex justify-start text-sm text-gray-400 font-bold">
-        {dataAddrById?.place}
+        {hotelPlace}
       </p>
       <hr className="text-gray-600 font-bold py-4" />
       <div className="flex justify-between">

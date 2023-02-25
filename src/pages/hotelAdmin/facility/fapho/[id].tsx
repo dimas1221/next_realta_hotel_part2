@@ -171,7 +171,13 @@ export default function Fapho() {
             onCancel={() => setModal2Open(false)}
             footer={null}
           >
-            <Form action="" encType="multipart/form-data" method="POST">
+            <Form
+              layout="vertical"
+              className="bg-white p-6 rounded-lg w-3/4 mx-auto"
+              action=""
+              encType="multipart/form-data"
+              method="POST"
+            >
               <Form.Item label="upload">
                 <Input type="file" onChange={onUploadLogo} accept="image/*" />
               </Form.Item>

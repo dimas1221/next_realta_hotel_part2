@@ -35,8 +35,9 @@ function* handlerGetMaxIdRoom(): any {
 // insert
 function* handlerInsertFaciAdmin(action: any): any {
   try {
-    yield call(ApiHotel.insertFaci, action.payload);
-    yield put(doInsertFaciSucced(action.payload));
+    const hasil = yield call(ApiHotel.insertFaci, action.payload);
+    yield put(doInsertFaciSucced(hasil.data.result));
+    console.log("hasil Faci", hasil);
   } catch (error) {
     yield put(doInsertFaciFailed(error));
   }

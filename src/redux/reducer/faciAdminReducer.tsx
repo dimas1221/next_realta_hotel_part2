@@ -20,7 +20,7 @@ function FaciAdminReducer(state = initialState, action: any) {
     case ActionTypes.ADD_FACIADMIN:
       return { ...state };
     case ActionTypes.ADD_FACIADMIN_SUCCED:
-      return { ...state, faciAdmin: [...state.faciAdmin, action.payload] };
+      return { ...state, faciAdmin: action.payload };
     // delete
     case ActionTypes.DEL_FACI:
       return { ...state };
