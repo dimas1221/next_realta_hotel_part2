@@ -30,7 +30,7 @@ export default function Fapho() {
   const dispatch = useDispatch();
 
   const faphoHotel = useSelector((state: any) => state.FaphoReducer.fapho);
-  const faphoOne = faphoHotel.filter((item: any) => item.fapho_faci_id == id);
+  const faphoOne = faphoHotel?.filter((item: any) => item?.fapho_faci_id == id);
   const faphoByOne = faphoHotel?.find((item: any) => item.fapho_faci_id == id);
   // reducer faci
   const faciHotel = useSelector(
@@ -80,6 +80,11 @@ export default function Fapho() {
       key: "fapho_thumbnail_filename",
     },
     {
+      title: "fapho_primary",
+      dataIndex: "fapho_primary",
+      key: "fapho_primary",
+    },
+    {
       title: "fapho_photo_filename",
       dataIndex: "fapho_photo_filename",
       key: "fapho_photo_filename",
@@ -106,7 +111,11 @@ export default function Fapho() {
   ];
   // modalinsert
   const [modal2Open, setModal2Open] = useState(false);
-
+  const [primary, setPrimary] = useState(0);
+  const handlerSelectPrimary = (value: any) => {
+    setPrimary(value);
+  };
+  console.log("object", primary);
   const [dataUp, setDataUp] = useState(new FormData());
   console.log("data up", dataUp);
   const onUploadLogo = (e: any) => {
@@ -116,12 +125,8 @@ export default function Fapho() {
     let formData = new FormData();
     formData.append("file", img);
     formData.append("faphoFaci", idFaci);
-    console.log("image check => ", img);
-    console.log("id check => ", idFaci);
-    console.log("formData check => ", formData);
+    formData.append("faphoPrimary", primary.toString());
     console.log("formData:", Object.fromEntries(formData.entries()));
-
-    // dispatch(doUploadFapho(formData));
     setDataUp(formData);
   };
   //  save photo
@@ -129,6 +134,7 @@ export default function Fapho() {
     e.preventDefault();
     dispatch(doUploadFapho(dataUp));
     setModal2Open(false);
+    // console.log(Object.fromEntries(dataUp.entries()));
   };
 
   // upload foto
@@ -165,14 +171,20 @@ export default function Fapho() {
             onCancel={() => setModal2Open(false)}
             footer={null}
           >
-            <form action="" encType="multipart/form-data" method="POST">
-              <label className="custom-file-upload">
-                <input type="file" onChange={onUploadLogo} accept="image/*" />
-              </label>
+            <Form action="" encType="multipart/form-data" method="POST">
+              <Form.Item label="upload">
+                <Input type="file" onChange={onUploadLogo} accept="image/*" />
+              </Form.Item>
+              <Form.Item label="setPrimary">
+                <Select onChange={handlerSelectPrimary}>
+                  <Select.Option value={1}>primary</Select.Option>
+                  <Select.Option value={0}>Non Primary</Select.Option>
+                </Select>
+              </Form.Item>
               <Button type="primary" className="bg-red-500" onClick={addData}>
                 Save
               </Button>
-            </form>
+            </Form>
           </Modal>
         </>
         {/* end */}

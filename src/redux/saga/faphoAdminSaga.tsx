@@ -19,8 +19,12 @@ function* handlerFapho(): any {
 // insert
 function* handlerUploadFapho(action: any): any {
   try {
-    yield call(ApiHotel.uploadFapho, action.payload);
-    yield put(doUploadFaphoSucced(action.payload));
+    // console.log(Object.fromEntries(action.payload.entries()));
+    const hasil = yield call(ApiHotel.uploadFapho, action.payload);
+    yield put(doUploadFaphoSucced(hasil.data.result));
+    // console.log(hasil);
+
+    // console.log(hasil);
   } catch (error) {
     yield put(doUploadFaphoFailed(error));
   }
