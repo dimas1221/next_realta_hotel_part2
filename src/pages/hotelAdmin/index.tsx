@@ -20,6 +20,8 @@ import {
 import { ColumnType } from "antd/es/table";
 import { FaHotel } from "react-icons/fa";
 import dayjs from "dayjs";
+import LayoutAdmin from "@/components/Layout/LayoutAdmin";
+import { Box } from "@mui/material";
 
 export default function index() {
   const dispatch = useDispatch();

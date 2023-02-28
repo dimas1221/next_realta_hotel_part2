@@ -21,9 +21,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { AiFillPicture } from "react-icons/ai";
 import { ImUpload2 } from "react-icons/im";
 
-import type { RcFile, UploadProps } from "antd/es/upload";
-import type { UploadFile } from "antd/es/upload/interface";
-
+interface InputFields {
+  file: File | null;
+  value: string;
+}
 export default function Fapho() {
   const router = useRouter();
   const { id } = router.query;
@@ -112,12 +113,13 @@ export default function Fapho() {
   // modalinsert
   const [modal2Open, setModal2Open] = useState(false);
   const [primary, setPrimary] = useState(0);
+  console.log("p", primary);
   const handlerSelectPrimary = (value: any) => {
     setPrimary(value);
   };
-  console.log("object", primary);
+
   const [dataUp, setDataUp] = useState(new FormData());
-  console.log("data up", dataUp);
+  const [selectedImage, setSelectedImage] = useState("");
   const onUploadLogo = (e: any) => {
     const idFaci = faphoByOne?.fapho_faci_id;
     const img = e.target.files[0];
@@ -126,8 +128,12 @@ export default function Fapho() {
     formData.append("file", img);
     formData.append("faphoFaci", idFaci);
     formData.append("faphoPrimary", primary.toString());
+    console.log("primary", primary);
     console.log("formData:", Object.fromEntries(formData.entries()));
     setDataUp(formData);
+    // set selected image URL
+    const imageUrl = URL.createObjectURL(e.target.files[0]);
+    setSelectedImage(imageUrl);
   };
   //  save photo
   const addData = (e: any) => {
@@ -137,8 +143,51 @@ export default function Fapho() {
     // console.log(Object.fromEntries(dataUp.entries()));
   };
 
-  // upload foto
+  // upload foto multipel
+  // useEffect(() => {
+  //   if (faphoByOne) {
+  //     setInputList([
+  //       { file: "", faphoFaci: faphoByOne?.fapho_faci_id, faphoPrimary: "" },
+  //     ]);
+  //   }
+  // }, [faphoByOne]);
 
+  // const [inputList, setInputList] = useState([
+  //   { file: "", faphoFaci: 0, faphoPrimary: "" },
+  // ]);
+  // console.log("in", inputList);
+  // const handleAddInput = () => {
+  //   setInputList([
+  //     ...inputList,
+  //     { file: "", faphoFaci: faphoByOne?.fapho_faci_id, faphoPrimary: "" },
+  //   ]);
+  // };
+
+  // const handleRemoveInput = (index: any) => {
+  //   const list = [...inputList];
+  //   list.splice(index, 1);
+  //   setInputList(list);
+  // };
+
+  // const handleInputChange = (e: any, index: any): void => {
+  //   const { name, value } = e.target;
+  //   const list = [...inputList];
+  //   if (name === "file") {
+  //     list[index][name] = e.target.files[0];
+  //   } else {
+  //     list[index][name] = value;
+  //   }
+  //   setInputList(list);
+  // };
+
+  // //  save photo
+  // const addData = (e: any) => {
+  //   e.preventDefault();
+  //   dispatch(doUploadFapho(inputList));
+  //   console.log("discp", inputList);
+  //   setModal2Open(false);
+  //   // console.log(Object.fromEntries(dataUp.entries()));
+  // };
   return (
     <div className="w-3/4 mx-auto text-center">
       <div className="flex justify-between py-3">
@@ -181,8 +230,11 @@ export default function Fapho() {
               <Form.Item label="upload">
                 <Input type="file" onChange={onUploadLogo} accept="image/*" />
               </Form.Item>
+              {selectedImage && (
+                <Image src={selectedImage} alt="Selected Image" />
+              )}
               <Form.Item label="setPrimary">
-                <Select onChange={handlerSelectPrimary}>
+                <Select onChange={handlerSelectPrimary} value={primary}>
                   <Select.Option value={1}>primary</Select.Option>
                   <Select.Option value={0}>Non Primary</Select.Option>
                 </Select>
@@ -191,6 +243,74 @@ export default function Fapho() {
                 Save
               </Button>
             </Form>
+            {/* form dinamis */}
+            {/* <Button
+              type="primary"
+              className="bg-red-500 flex justify-end"
+              onClick={addData}
+            >
+              Save
+            </Button> */}
+            {/* <Form
+              layout="vertical"
+              className="bg-white p-6 rounded-lg w-3/4 mx-auto"
+              action=""
+              encType="multipart/form-data"
+              method="POST"
+            >
+              {inputList.map((input: any, index: any) => (
+                <div key={index}>
+                  <Form.Item label="upload">
+                    <Input
+                      type="file"
+                      name="file"
+                      onChange={(e) => handleInputChange(e, index)}
+                      accept="image/*"
+                    />
+                  </Form.Item>
+                  {/* <Form.Item label="faphoFaci">
+                    <Input
+                      type="text"
+                      name="faphoFaci"
+                      value={idFaci}
+                      onChange={(e) => handleInputChange(idFaci, index)}
+                      readOnly
+                    />
+                  </Form.Item> */}
+            {/* <Form.Item label="setPrimary">
+                    <Select
+                      value={input.faphoPrimary}
+                      onChange={(value) =>
+                        handleInputChange(
+                          { target: { name: "faphoPrimary", value } },
+                          index
+                        )
+                      }
+                    >
+                      <Select.Option value={1}>primary</Select.Option>
+                      <Select.Option value={0}>Non Primary</Select.Option>
+                    </Select>
+                  </Form.Item>
+                  {index !== 0 && (
+                    <Button
+                      className="mr-2 bg-red-500"
+                      onClick={() => handleRemoveInput(index)}
+                    >
+                      Remove
+                    </Button>
+                  )}
+                  {index === inputList.length - 1 && (
+                    <Button
+                      type="primary"
+                      className="bg-green-500"
+                      onClick={handleAddInput}
+                    >
+                      Add
+                    </Button>
+                  )}
+                </div>
+              ))}
+            </Form> */}
           </Modal>
         </>
         {/* end */}
