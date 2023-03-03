@@ -98,7 +98,9 @@ export default function Fapho() {
   const faciHotel = useSelector(
     (state: any) => state.FaciAdminReducer.faciAdmin
   );
-  const faciOne = faciHotel?.find((item: any) => item.faci_hotel_id == id);
+  console.log("faci hotel", faciHotel);
+  const faciOne = faciHotel?.find((itemFaci: any) => itemFaci.faci_id == id);
+  console.log("faci", faciOne);
   const [faciName, setFaciName] = useState("");
   const [faciDate, setFaciDate] = useState("");
 
@@ -117,6 +119,7 @@ export default function Fapho() {
     {
       title: "No.",
       dataIndex: "index",
+      key: "index",
       render: (text: any, record: any, index: any) => index + 1,
       fixed: "left",
     },
@@ -126,8 +129,8 @@ export default function Fapho() {
       key: "fapho_faci_id",
     },
     {
-      title: "photo",
-      key: "gambar",
+      title: "fapho_url",
+      key: "fapho_url",
       render: (text: any, record: any) => (
         <Image
           src={record?.fapho_url}
@@ -151,16 +154,11 @@ export default function Fapho() {
       dataIndex: "fapho_photo_filename",
       key: "fapho_photo_filename",
     },
-    {
-      title: "fapho_photo_filename",
-      dataIndex: "fapho_photo_filename",
-      key: "fapho_photo_filename",
-    },
-    {
-      title: "fapho_url",
-      dataIndex: "fapho_url",
-      key: "fapho_url",
-    },
+    // {
+    //   title: "fapho_url",
+    //   dataIndex: "fapho_url",
+    //   key: "fapho_url",
+    // },
     {
       title: "fapho_modifield_date",
       key: "fapho_modifield_date",
@@ -224,21 +222,6 @@ export default function Fapho() {
       .finally(() => {
         setUploading(false);
       });
-  };
-
-  const props: UploadProps = {
-    onRemove: (file) => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
-    },
-    beforeUpload: (file) => {
-      setFileList([...fileList, file]);
-
-      return false;
-    },
-    fileList,
   };
   return (
     <div className="w-3/4 mx-auto text-center">

@@ -34,7 +34,7 @@ export default function Fapho() {
   const faciHotel = useSelector(
     (state: any) => state.FaciAdminReducer.faciAdmin
   );
-  const faciOne = faciHotel?.find((item: any) => item.faci_hotel_id == id);
+  const faciOne = faciHotel?.find((item: any) => item.faci_id == id);
 
   useEffect(() => {
     dispatch(doGetFaciPriceHistory());
