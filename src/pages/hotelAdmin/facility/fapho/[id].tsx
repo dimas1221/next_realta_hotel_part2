@@ -98,9 +98,8 @@ export default function Fapho() {
   const faciHotel = useSelector(
     (state: any) => state.FaciAdminReducer.faciAdmin
   );
-  console.log("faci hotel", faciHotel);
+
   const faciOne = faciHotel?.find((itemFaci: any) => itemFaci.faci_id == id);
-  console.log("faci", faciOne);
   const [faciName, setFaciName] = useState("");
   const [faciDate, setFaciDate] = useState("");
 
@@ -124,12 +123,7 @@ export default function Fapho() {
       fixed: "left",
     },
     {
-      title: "fapho_faci_id",
-      dataIndex: "fapho_faci_id",
-      key: "fapho_faci_id",
-    },
-    {
-      title: "fapho_url",
+      title: "Image",
       key: "fapho_url",
       render: (text: any, record: any) => (
         <Image
@@ -140,17 +134,17 @@ export default function Fapho() {
       ),
     },
     {
-      title: "fapho_thumbnail_filename",
+      title: "thumbnail",
       dataIndex: "fapho_thumbnail_filename",
       key: "fapho_thumbnail_filename",
     },
     {
-      title: "fapho_primary",
+      title: "primary",
       dataIndex: "fapho_primary",
       key: "fapho_primary",
     },
     {
-      title: "fapho_photo_filename",
+      title: "filename",
       dataIndex: "fapho_photo_filename",
       key: "fapho_photo_filename",
     },
@@ -160,7 +154,7 @@ export default function Fapho() {
     //   key: "fapho_url",
     // },
     {
-      title: "fapho_modifield_date",
+      title: "modifield date",
       key: "fapho_modifield_date",
       render: (text: any, record: any, index) => (
         <p className="w-32 text-xs">
@@ -201,8 +195,9 @@ export default function Fapho() {
     fileList.forEach((file) => {
       formData.append("file[]", file as RcFile);
       console.log("file", file);
+      formData.append("faphoFaci", idFaci);
+      console.log("formData:", Object.fromEntries(formData.entries()));
     });
-    formData.append("faphoFaci", idFaci);
     console.log("id", idFaci);
     setModal2Open(false);
     setUploading(true);

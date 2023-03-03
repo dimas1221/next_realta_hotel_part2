@@ -87,21 +87,21 @@ export default function udatehotel() {
         style={{ maxWidth: 600 }}
         className="bg-white px-5 py-5"
       >
-        <Form.Item label="hotelName">
+        <Form.Item label="hotel Name">
           <Input
             placeholder=""
             value={dataUpdate.hotelName}
             onChange={eventHandler("hotelName")}
           />
         </Form.Item>
-        <Form.Item label="hotelDescription">
+        <Form.Item label="Description">
           <TextArea
             placeholder=""
             value={dataUpdate.hotelDescription}
             onChange={eventHandler("hotelDescription")}
           />
         </Form.Item>
-        <Form.Item label="hotelRatingStar">
+        <Form.Item label="hotel Rating Star">
           <Input
             placeholder=""
             type="number"
@@ -110,7 +110,7 @@ export default function udatehotel() {
             onChange={eventHandler("hotelRatingStar")}
           />
         </Form.Item>
-        <Form.Item label="hotelPhonenumber">
+        <Form.Item label="hotel Phonenumber">
           <Input
             placeholder=""
             type="text"

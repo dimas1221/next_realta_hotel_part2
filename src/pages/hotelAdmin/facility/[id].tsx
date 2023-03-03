@@ -122,23 +122,23 @@ export default function Faci() {
       ),
     },
     {
-      title: "faciMax",
+      title: "max number",
       dataIndex: "faci_max_number",
       key: "faci_max_number",
       sorter: (a: any, b: any) => a.faci_max_number - b.faci_max_number,
     },
     {
-      title: "faci_measure_unit",
+      title: "measure unit",
       dataIndex: "faci_measure_unit",
       key: "faci_measure_unit",
     },
     {
-      title: "faci_room_number",
+      title: "room number",
       dataIndex: "faci_room_number",
       key: "faci_room_number",
     },
     {
-      title: "faci_startdate",
+      title: "start date",
       key: "index",
       render: (text: any, record: any, index) => (
         <p className="w-32 text-xs">
@@ -147,7 +147,7 @@ export default function Faci() {
       ),
     },
     {
-      title: "faci_endate",
+      title: "end date",
       key: "index",
       render: (text: any, record: any, index) => (
         <p className="w-32 text-xs">
@@ -156,32 +156,32 @@ export default function Faci() {
       ),
     },
     {
-      title: "faci_low_price",
+      title: "low price",
       dataIndex: "faci_low_price",
       key: "faci_low_price",
     },
     {
-      title: "faci_hight_price",
+      title: "hight price",
       dataIndex: "faci_hight_price",
       key: "faci_hight_price",
     },
     {
-      title: "faci_rate_price",
+      title: "rate price",
       dataIndex: "faci_rate_price",
       key: "faci_rate_price",
     },
     {
-      title: "faci_discount",
+      title: "discount",
       dataIndex: "faci_discount",
       key: "faci_discount",
     },
     {
-      title: "faci_tax_rate",
+      title: "tax rate",
       dataIndex: "faci_tax_rate",
       key: "faci_tax_rate",
     },
     {
-      title: "faci_modified_date",
+      title: "modified date",
       key: "index",
       render: (text: any, record: any, index) => (
         <p className="w-32 text-xs">
@@ -190,14 +190,9 @@ export default function Faci() {
       ),
     },
     {
-      title: "faci_cagro_id",
+      title: "cagro id",
       dataIndex: "faci_cagro_id",
       key: "faci_cagro_id",
-    },
-    {
-      title: "faci_hotel_id",
-      dataIndex: "faci_hotel_id",
-      key: "faci_hotel_id",
     },
     {
       title: (
@@ -602,7 +597,7 @@ export default function Faci() {
               <Col span={10}>
                 <Form.Item
                   className=""
-                  label="faci_name"
+                  label="facility name"
                   name="faciName"
                   rules={[{ required: true }]}
                   validateStatus={
@@ -621,7 +616,7 @@ export default function Faci() {
 
                 <Form.Item
                   className=""
-                  label="faci_max_number"
+                  label="facility max number"
                   name="faciMaxNumber"
                   rules={[{ required: true }]}
                   validateStatus={
@@ -645,7 +640,7 @@ export default function Faci() {
                 </Form.Item>
                 <Form.Item
                   className=""
-                  label="faci_measure_unit"
+                  label="facility measure unit"
                   name="faciMeasureUnit"
                   rules={[{ required: true }]}
                   validateStatus={
@@ -666,7 +661,7 @@ export default function Faci() {
                 </Form.Item>
                 <Form.Item
                   className=""
-                  label="faci_cagro_id"
+                  label="facility cagro id"
                   name="faciCagro"
                   rules={[{ required: true }]}
                   validateStatus={
@@ -685,7 +680,7 @@ export default function Faci() {
                     <Select.Option value={4}>Gym</Select.Option>
                   </Select>
                 </Form.Item>
-                <Form.Item className="" label="faci_room_number">
+                <Form.Item className="" label="facility room_number">
                   <Input
                     placeholder="input placeholder"
                     type="text"
@@ -696,7 +691,7 @@ export default function Faci() {
                 </Form.Item>
                 <Form.Item
                   className=""
-                  label="faci_startdate"
+                  label="facility start date"
                   name="faciStartdate"
                   rules={[{ required: true }]}
                   validateStatus={
@@ -719,7 +714,7 @@ export default function Faci() {
                 </Form.Item>
                 <Form.Item
                   className=""
-                  label="faci_description"
+                  label="facility description"
                   name="faciDescription"
                   rules={[{ required: true }]}
                   validateStatus={
@@ -743,7 +738,7 @@ export default function Faci() {
               <Col span={10} className="ml-5">
                 <Form.Item
                   className=""
-                  label="faci_endate"
+                  label="facility end date"
                   name="faciEndate"
                   rules={[{ required: true }]}
                   validateStatus={
@@ -764,7 +759,7 @@ export default function Faci() {
                 </Form.Item>
                 <Form.Item
                   className=""
-                  label="faci_hight_price"
+                  label="facility hight price"
                   name="faciHightPrice"
                   rules={[{ required: true }]}
                   validateStatus={
@@ -778,18 +773,20 @@ export default function Faci() {
                       : null
                   }
                 >
-                  <Input
-                    placeholder=""
-                    type="number"
-                    value={dataFaci.faciHightPrice}
-                    onChange={eventHandler("faciHightPrice")}
-                    suffix="$"
-                    min={0}
-                  />
+                  <div className="input-with-currency">
+                    <span className="input-currency-symbol">Rp</span>
+                    <Input
+                      placeholder=""
+                      type="number"
+                      value={dataFaci.faciHightPrice}
+                      onChange={eventHandler("faciHightPrice")}
+                      min={0}
+                    />
+                  </div>
                 </Form.Item>
                 <Form.Item
                   className=""
-                  label="faci_low_price"
+                  label="facility low price"
                   name="faciLowPrice"
                   rules={[{ required: true }]}
                   validateStatus={
@@ -803,18 +800,20 @@ export default function Faci() {
                       : null
                   }
                 >
-                  <Input
-                    placeholder=""
-                    type="number"
-                    value={dataFaci.faciLowPrice}
-                    onChange={eventHandler("faciLowPrice")}
-                    suffix="$"
-                    min={0}
-                  />
+                  <div className="input-with-currency">
+                    <span className="input-currency-symbol">Rp</span>
+                    <Input
+                      placeholder=""
+                      type="number"
+                      value={dataFaci.faciLowPrice}
+                      onChange={eventHandler("faciLowPrice")}
+                      min={0}
+                    />
+                  </div>
                 </Form.Item>
                 <Form.Item
                   className=""
-                  label="faci_rate_price"
+                  label="facility rate price"
                   name="faciRatePrice"
                   rules={[{ required: true }]}
                   validateStatus={
@@ -828,14 +827,16 @@ export default function Faci() {
                       : null
                   }
                 >
-                  <Input
-                    placeholder=""
-                    type="number"
-                    value={dataFaci.faciRatePrice}
-                    onChange={eventHandler("faciRatePrice")}
-                    suffix="$"
-                    min={0}
-                  />
+                  <div className="input-with-currency">
+                    <span className="input-currency-symbol">Rp</span>
+                    <Input
+                      placeholder=""
+                      type="number"
+                      value={dataFaci.faciRatePrice}
+                      onChange={eventHandler("faciRatePrice")}
+                      min={0}
+                    />
+                  </div>
                 </Form.Item>
                 <Form.Item className="" label="discount">
                   <Input
@@ -848,35 +849,36 @@ export default function Faci() {
                     max={100}
                   />
                 </Form.Item>
-                <Form.Item className="" label="faci_discount">
+                <Form.Item className="" label="facility tax rate">
+                  <div className="input-with-currency">
+                    <span className="input-currency-symbol">Rp</span>
+                    <Input
+                      placeholder=""
+                      type="number"
+                      value={dataFaci.faciTaxRate}
+                      onChange={eventHandler("faciTaxRate")}
+                      min={0}
+                    />
+                  </div>
+                </Form.Item>
+                <Form.Item className="" label="">
                   <Input
                     placeholder=""
                     type="text"
                     value={dataFaci.faciDiscount}
                     onChange={eventHandler("faciDiscount")}
-                    readOnly
+                    hidden
                     className="bg-gray-100 font-bold text-gray-500"
                     suffix="$"
                   />
                 </Form.Item>
-                <Form.Item className="" label="faci_tax_rate">
-                  <Input
-                    placeholder=""
-                    type="number"
-                    value={dataFaci.faciTaxRate}
-                    onChange={eventHandler("faciTaxRate")}
-                    suffix="$"
-                    min={0}
-                  />
-                </Form.Item>
-
                 <Form.Item className="">
-                  <Form.Item className="faciHotel" label="faciHotelId">
+                  <Form.Item className="faciHotel" label="">
                     <Input
                       placeholder=""
                       value={dataFaci.faciHotel}
                       onChange={eventHandler("faciHotel")}
-                      readOnly
+                      hidden
                       className="text-base text-gray-500 font-bold bg-gray-100"
                     />
                   </Form.Item>

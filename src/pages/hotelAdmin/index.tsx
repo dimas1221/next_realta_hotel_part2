@@ -94,16 +94,10 @@ export default function index() {
       sorter: (a: any, b: any) => a.hotelName.length - b.hotelName.length,
     },
     {
-      title: "Deskripsi",
+      title: "Deskription",
       dataIndex: "hotelDescription",
       key: "hotelDescription",
     },
-    // {
-    //   title: "Rating",
-    //   dataIndex: "hotelRatingStar",
-    //   key: "hotelRatingStar",
-    // sorter: (a: any, b: any) => a.hotelRatingStar - b.hotelRatingStar,
-    // },
     {
       title: "Rating",
       key: "index",
@@ -117,7 +111,7 @@ export default function index() {
       className: "w-36",
     },
     {
-      title: "hotelPhonenumber",
+      title: "hotel Phonenumber",
       dataIndex: "hotelPhonenumber",
       key: "hotelPhonenumber",
     },
