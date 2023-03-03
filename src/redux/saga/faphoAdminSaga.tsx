@@ -22,7 +22,7 @@ function* handlerUploadFapho(action: any): any {
     // console.log(Object.fromEntries(action.payload.entries()));
     const hasil = yield call(ApiHotel.uploadFapho, action.payload);
     yield put(doUploadFaphoSucced(hasil.data.result));
-    // console.log(hasil);
+    console.log(hasil);
 
     // console.log(hasil);
   } catch (error) {

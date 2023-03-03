@@ -13,13 +13,10 @@ import { useRouter } from "next/router";
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/20/solid";
 
-const SideBarAdmin = forwardRef(({ showNav }: any, ref: any) => {
+function SideBarAdmin() {
   const router = useRouter();
   return (
-    <div
-      ref={ref}
-      className="fixed w-56 bg-white shadow-sm h-full overflow-y-auto"
-    >
+    <div className="fixed w-56 bg-white shadow-sm h-full overflow-y-auto">
       <div className="flex justify-center mt-6 mb-5">
         <picture>
           <img
@@ -1134,7 +1131,7 @@ const SideBarAdmin = forwardRef(({ showNav }: any, ref: any) => {
       </div>
     </div>
   );
-});
+}
 
 SideBarAdmin.displayName = "SideBarAdmin";
 export default SideBarAdmin;
