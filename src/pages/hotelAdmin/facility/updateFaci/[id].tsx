@@ -1,5 +1,5 @@
 import { doFaciAdminReq, doUpdateFaci } from "@/redux/action/actionFaciAdmin";
-import { Button, Col, Form, Input, Row, Select } from "antd";
+import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -57,6 +57,11 @@ export default function index() {
     (event) => {
       setDataFaci({ ...dataFaci, [item]: event.target.value });
     };
+
+  const HandlerSetDate = (event: any) => {
+    const { name, value } = event.target;
+    setDataFaci((filter) => ({ ...filter, [name]: value }));
+  };
   // button insert data hotel
   // message require
   const [showError, setShowError] = useState({
@@ -206,7 +211,7 @@ export default function index() {
           <Col span={10}>
             <Form.Item
               className=""
-              label="faci_name"
+              label="facility name"
               validateStatus={
                 dataFaci.faci_name === "" && showError.faci_name ? "error" : ""
               }
@@ -220,7 +225,7 @@ export default function index() {
 
             <Form.Item
               className=""
-              label="faci_max_number"
+              label="facility max number"
               validateStatus={
                 dataFaci.faci_max_number === 0 && showError.faci_max_number
                   ? "error"
@@ -241,7 +246,7 @@ export default function index() {
             </Form.Item>
             <Form.Item
               className=""
-              label="faci_measure_unit"
+              label="facility measure unit"
               validateStatus={
                 dataFaci.faci_measure_unit === "" && showError.faci_measure_unit
                   ? "error"
@@ -261,9 +266,57 @@ export default function index() {
                 <Select.Option value="beds">beds</Select.Option>
               </Select>
             </Form.Item>
-            {/* <Form.Item
+            <Form.Item
+              label="facility start date"
+              validateStatus={
+                dataFaci.faci_startdate === "" && showError.faci_startdate
+                  ? "error"
+                  : ""
+              }
+              help={
+                dataFaci.faci_startdate === ""
+                  ? messageError.faci_startdate
+                  : null
+              }
+            >
+              <DatePicker
+                name="faci_startdate"
+                value={dayjs(dataFaci.faci_startdate)}
+                onChange={(date) =>
+                  HandlerSetDate({
+                    target: { name: "faci_startdate", value: date },
+                  })
+                }
+              />
+            </Form.Item>
+            <Form.Item
               className=""
-              label="faci_cagro_id"
+              label="facility end date"
+              validateStatus={
+                dataFaci.faci_endate === "" && showError.faci_endate
+                  ? "error"
+                  : ""
+              }
+              help={
+                dataFaci.faci_endate === "" ? messageError.faci_endate : null
+              }
+            >
+              <DatePicker
+                name="faci_endate"
+                value={dayjs(dataFaci.faci_endate)}
+                onChange={(date) =>
+                  HandlerSetDate({
+                    target: {
+                      name: "faci_endate",
+                      value: date?.format("YYYY-MM-DD"),
+                    },
+                  })
+                }
+              />
+            </Form.Item>
+            <Form.Item
+              className=""
+              label=""
               name="faci_cagro_id"
               rules={[{ required: true }]}
               validateStatus={
@@ -280,81 +333,25 @@ export default function index() {
                 placeholder={dataFaci.faci_cagro_id.toString()}
                 value={dataFaci.faci_cagro_id}
                 onChange={eventHandler("faci_cagro_id")}
-                readOnly
+                hidden
                 className="bg-gray-100 font-bold text-gray-500"
               />
-            </Form.Item> */}
-            {/* <Form.Item className="" label="faci_room_number">
+            </Form.Item>
+            <Form.Item className="" label="">
               <Input
                 placeholder={dataFaci.faci_room_number}
                 type="text"
                 value={dataFaci.faci_room_number}
                 onChange={eventHandler("faci_room_number")}
-                readOnly
+                hidden
                 className="bg-gray-100 font-bold text-gray-500"
-              />
-            </Form.Item> */}
-            <Form.Item
-              label="faci_startdate"
-              validateStatus={
-                dataFaci.faci_startdate === "" && showError.faci_startdate
-                  ? "error"
-                  : ""
-              }
-              help={
-                dataFaci.faci_startdate === ""
-                  ? messageError.faci_startdate
-                  : null
-              }
-            >
-              <Input
-                type="date"
-                value={dataFaci.faci_startdate}
-                onChange={eventHandler("faci_startdate")}
-              />
-            </Form.Item>
-            <Form.Item
-              className=""
-              label="faci_description"
-              validateStatus={
-                dataFaci.faci_description === "" && showError.faci_description
-                  ? "error"
-                  : ""
-              }
-              help={
-                dataFaci.faci_description === ""
-                  ? messageError.faci_description
-                  : null
-              }
-            >
-              <TextArea
-                value={dataFaci.faci_description}
-                onChange={eventHandler("faci_description")}
               />
             </Form.Item>
           </Col>
           <Col span={10} className="ml-5">
             <Form.Item
               className=""
-              label="faci_endate"
-              validateStatus={
-                dataFaci.faci_endate === "" && showError.faci_endate
-                  ? "error"
-                  : ""
-              }
-              help={
-                dataFaci.faci_endate === "" ? messageError.faci_endate : null
-              }
-            >
-              <Input
-                type="date"
-                value={dataFaci.faci_endate}
-                onChange={eventHandler("faci_endate")}
-              />
-            </Form.Item>
-            <Form.Item
-              className=""
-              label="faci_hight_price"
+              label="facility hight price"
               validateStatus={
                 dataFaci.faci_hight_price === "" && showError.faci_hight_price
                   ? "error"
@@ -370,13 +367,13 @@ export default function index() {
                 type="text"
                 value={dataFaci.faci_hight_price}
                 onChange={eventHandler("faci_hight_price")}
-                suffix="$"
+                prefix="Rp"
                 min={0}
               />
             </Form.Item>
             <Form.Item
               className=""
-              label="faci_low_price"
+              label="facility low price"
               validateStatus={
                 dataFaci.faci_low_price === "" && showError.faci_low_price
                   ? "error"
@@ -392,13 +389,13 @@ export default function index() {
                 type="text"
                 value={dataFaci.faci_low_price}
                 onChange={eventHandler("faci_low_price")}
-                suffix="$"
+                prefix="Rp"
                 min={0}
               />
             </Form.Item>
             <Form.Item
               className=""
-              label="faci_rate_price"
+              label="facility rate price"
               validateStatus={
                 dataFaci.faci_rate_price === "" && showError.faci_rate_price
                   ? "error"
@@ -414,7 +411,7 @@ export default function index() {
                 type="text"
                 value={dataFaci.faci_rate_price}
                 onChange={eventHandler("faci_rate_price")}
-                suffix="$"
+                prefix="Rp"
                 min={0}
               />
             </Form.Item>
@@ -429,24 +426,42 @@ export default function index() {
                 max={100}
               />
             </Form.Item> */}
-            {/* <Form.Item className="" label="faci_discount">
+            <Form.Item className="" label="facility discount">
               <Input
                 placeholder={dataFaci.faci_discount}
                 type="text"
                 value={dataFaci.faci_discount}
                 onChange={eventHandler("faci_discount")}
-                readOnly
-                className="bg-gray-100 font-bold text-gray-500"
-                suffix="$"
+                // className="bg-gray-100 font-bold text-gray-500"
+                prefix="Rp"
               />
-            </Form.Item> */}
-            <Form.Item className="" label="faci_tax_rate">
+            </Form.Item>
+            <Form.Item className="" label="facility tax rate">
               <Input
                 type="text"
                 value={dataFaci.faci_tax_rate}
                 onChange={eventHandler("faci_tax_rate")}
-                suffix="$"
+                prefix="Rp"
                 min={0}
+              />
+            </Form.Item>
+            <Form.Item
+              className=""
+              label="facility description"
+              validateStatus={
+                dataFaci.faci_description === "" && showError.faci_description
+                  ? "error"
+                  : ""
+              }
+              help={
+                dataFaci.faci_description === ""
+                  ? messageError.faci_description
+                  : null
+              }
+            >
+              <TextArea
+                value={dataFaci.faci_description}
+                onChange={eventHandler("faci_description")}
               />
             </Form.Item>
             {/* <Form.Item className="faci_hotel_id" label="faciHotelId">

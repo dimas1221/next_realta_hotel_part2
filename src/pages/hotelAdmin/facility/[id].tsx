@@ -244,7 +244,7 @@ export default function Faci() {
                     onClick={() => showFapho(record.faci_id)}
                   >
                     <HiPhoto />
-                    <p>uploadPhoto</p>
+                    <p>Image</p>
                   </button>
                 </li>
                 <li className="py-2 px-2 hover:bg-gray-100 flex px-1">
@@ -253,7 +253,7 @@ export default function Faci() {
                     onClick={() => showFPH(record.faci_id)}
                   >
                     <GoHistory />
-                    <p>FPH</p>
+                    <p>History</p>
                   </button>
                 </li>
               </ul>

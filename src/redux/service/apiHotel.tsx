@@ -149,7 +149,7 @@ const getFaciPricehistory = async () => {
 // insert fapho
 const uploadFapho = async (data: any) => {
   try {
-    const result = await axios.post("/facility-photos/upload", data);
+    const result = await axios.post("/facility-photos/upload/firebase", data);
     return result;
   } catch (error) {
     return error;

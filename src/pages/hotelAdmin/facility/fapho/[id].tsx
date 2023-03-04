@@ -129,7 +129,7 @@ export default function Fapho() {
         <Image
           src={record?.fapho_url}
           alt={record?.fapho_url}
-          className="w-1/4"
+          style={{ width: "6rem" }}
         />
       ),
     },
@@ -192,32 +192,45 @@ export default function Fapho() {
   const handleUpload = () => {
     const formData = new FormData();
     const idFaci = faphoByOne?.fapho_faci_id;
-    fileList.forEach((file) => {
-      formData.append("file[]", file as RcFile);
+    // fileList.forEach((file) => {
+    //   formData.append("file[]", file as RcFile);
+    //   console.log("file", file);
+    //   console.log("formData:", Object.fromEntries(formData.entries()));
+    // });
+    fileList.map((file: any) => {
+      formData.append("file", file);
       console.log("file", file);
-      formData.append("faphoFaci", idFaci);
-      console.log("formData:", Object.fromEntries(formData.entries()));
     });
-    console.log("id", idFaci);
-    setModal2Open(false);
+    formData.append("faphoFaci", idFaci);
+    console.log("formData:", Object.fromEntries(formData.entries()));
     setUploading(true);
+    dispatch(doUploadFapho(formData));
+    if (!dispatch) {
+      message.error("gagal tambah data");
+    } else {
+      setModal2Open(false);
+      setFileList([]);
+      message.success("upload successfully.");
+      setUploading(false);
+    }
     // You can use any AJAX library you like
-    fetch("http://localhost:3005/facility-photos/upload/firebase", {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then(() => {
-        setFileList([]);
-        message.success("upload successfully.");
-      })
-      .catch(() => {
-        message.error("upload failed.");
-      })
-      .finally(() => {
-        setUploading(false);
-      });
+    // fetch("http://localhost:3005/facility-photos/upload/firebase", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((res) => res.json())
+    //   .then(() => {
+    //     setFileList([]);
+    //     message.success("upload successfully.");
+    //   })
+    //   .catch(() => {
+    //     message.error("upload failed.");
+    //   })
+    //   .finally(() => {
+    //     setUploading(false);
+    //   });
   };
+
   return (
     <div className="w-3/4 mx-auto text-center">
       <div className="flex justify-between py-3">
@@ -250,27 +263,35 @@ export default function Fapho() {
             onCancel={() => setModal2Open(false)}
             footer={null}
           >
-            <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
-              <SortableContext
-                items={fileList.map((i) => i.uid)}
-                strategy={verticalListSortingStrategy}
-              >
-                <Upload
-                  // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                  fileList={fileList}
-                  onChange={onChange}
-                  itemRender={(originNode, file) => (
-                    <DraggableUploadListItem
-                      originNode={originNode}
-                      file={file}
-                    />
-                  )}
-                  multiple={true}
+            <Form
+              layout="vertical"
+              className="bg-white p-6 rounded-lg w-3/4 mx-auto"
+              action=""
+              encType="multipart/form-data"
+              method="POST"
+            >
+              <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
+                <SortableContext
+                  items={fileList.map((i) => i.uid)}
+                  strategy={verticalListSortingStrategy}
                 >
-                  <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                </Upload>
-              </SortableContext>
-            </DndContext>
+                  <Upload
+                    // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                    fileList={fileList}
+                    onChange={onChange}
+                    itemRender={(originNode, file) => (
+                      <DraggableUploadListItem
+                        originNode={originNode}
+                        file={file}
+                      />
+                    )}
+                    multiple={true}
+                  >
+                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                  </Upload>
+                </SortableContext>
+              </DndContext>
+            </Form>
             <Button
               type="primary"
               onClick={handleUpload}

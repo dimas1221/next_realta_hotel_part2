@@ -48,12 +48,7 @@ export default function Fapho() {
       fixed: "left",
     },
     {
-      title: "faph_faci_id",
-      dataIndex: "faph_faci_id",
-      key: "faph_faci_id",
-    },
-    {
-      title: "faph_startdate",
+      title: "start date",
       key: "index",
       render: (text: any, record: any, index) => (
         <p className="w-32 text-xs">
@@ -62,7 +57,7 @@ export default function Fapho() {
       ),
     },
     {
-      title: "faph_endate",
+      title: "end date",
       key: "index",
       render: (text: any, record: any, index) => (
         <p className="w-32 text-xs">
@@ -71,17 +66,17 @@ export default function Fapho() {
       ),
     },
     {
-      title: "faph_low_price",
+      title: "low price",
       dataIndex: "faph_low_price",
       key: "faph_low_price",
     },
     {
-      title: "faph_high_price",
+      title: "high price",
       dataIndex: "faph_high_price",
       key: "faph_high_price",
     },
     {
-      title: "faph_discount",
+      title: "discount",
       dataIndex: "faph_discount",
       key: "faph_discount",
     },
