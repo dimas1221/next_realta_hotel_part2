@@ -20,9 +20,9 @@ function HotelAdminReducer(state = initialState, action: any) {
     case ActionTypes.ADD_HOTELADMIN:
       return { ...state };
     case ActionTypes.ADD_HOTELADMIN_SUCCED:
-      return { ...state, hotelAdmin: [...state.hotelAdmin, action.payload] };
+      return { ...state, hotelAdmin: action.payload };
     case ActionTypes.ADD_HOTELADMIN_FAILED:
-      return { ...state, hotelAdmin: [...state.hotelAdmin, action.payload] };
+      return { ...state, hotelAdmin: action.payload };
     // delete
     case ActionTypes.DEL_HOTELADMIN:
       return { ...state };

@@ -26,8 +26,8 @@ function* handlerHotelAdmin(): any {
 function* handlerInsertHotel(action: any): any {
   // jika return di postmane a cuma meampilkan string tidak pakai result
   try {
-    yield call(ApiHotel.insertHotel, action.payload);
-    yield put(doInsertHotelSuccess(action.payload));
+    const hasil = yield call(ApiHotel.insertHotel, action.payload);
+    yield put(doInsertHotelSuccess(hasil.data.result));
   } catch (err) {
     yield put(doInsertHotelFailed(err));
   }

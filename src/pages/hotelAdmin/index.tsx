@@ -114,6 +114,7 @@ export default function index() {
       title: "hotel Phonenumber",
       dataIndex: "hotelPhonenumber",
       key: "hotelPhonenumber",
+      className: "w-32",
     },
     {
       title: "modified date",
@@ -340,7 +341,7 @@ export default function index() {
         >
           <Form layout="vertical" className="bg-white p-6 rounded-lg mx-auto">
             <Form.Item
-              label="hotelName"
+              label="hotel name"
               name="hotelName"
               rules={[{ required: true }]}
               validateStatus={
@@ -397,7 +398,7 @@ export default function index() {
               />
             </Form.Item> */}
             <Form.Item
-              label="hotelPhonenumber"
+              label="hotel phonenumber"
               name="hotelPhonenumber"
               rules={[{ required: true }]}
               validateStatus={
@@ -415,11 +416,12 @@ export default function index() {
                 placeholder=""
                 value={valueHotel.hotelPhonenumber}
                 onChange={eventHandler("hotelPhonenumber")}
-                type="text"
+                type="number"
+                prefix="+62 "
               />
             </Form.Item>
             <Form.Item
-              label="hotelDescription"
+              label="hotel description"
               name="hotelDeskription"
               rules={[{ required: true }]}
               validateStatus={
@@ -439,12 +441,12 @@ export default function index() {
                 onChange={eventHandler("hotelDescription")}
               />
             </Form.Item>
-            <Form.Item label="hotelModifiedDate">
+            <Form.Item label="">
               <Input
                 placeholder="input placeholder"
                 value={valueHotel.hotelModifiedDate}
                 onChange={eventHandler("hotelModifiedDate")}
-                readOnly
+                hidden
                 type="date"
                 className="bg-gray-100 font-bold text-gray-500"
               />

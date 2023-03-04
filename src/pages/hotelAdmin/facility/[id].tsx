@@ -33,7 +33,7 @@ import {
 } from "@/redux/action/actionHotelAdmin";
 import { IoIosBed } from "react-icons/io";
 import dayjs from "dayjs";
-
+import NumberFormat from "react-number-format";
 export default function Faci() {
   const router = useRouter();
   const { id } = router.query;
@@ -773,16 +773,14 @@ export default function Faci() {
                       : null
                   }
                 >
-                  <div className="input-with-currency">
-                    <span className="input-currency-symbol">Rp</span>
-                    <Input
-                      placeholder=""
-                      type="number"
-                      value={dataFaci.faciHightPrice}
-                      onChange={eventHandler("faciHightPrice")}
-                      min={0}
-                    />
-                  </div>
+                  <Input
+                    placeholder=""
+                    type="number"
+                    value={dataFaci.faciHightPrice}
+                    onChange={eventHandler("faciHightPrice")}
+                    min={0}
+                    prefix="Rp "
+                  />
                 </Form.Item>
                 <Form.Item
                   className=""
@@ -800,16 +798,14 @@ export default function Faci() {
                       : null
                   }
                 >
-                  <div className="input-with-currency">
-                    <span className="input-currency-symbol">Rp</span>
-                    <Input
-                      placeholder=""
-                      type="number"
-                      value={dataFaci.faciLowPrice}
-                      onChange={eventHandler("faciLowPrice")}
-                      min={0}
-                    />
-                  </div>
+                  <Input
+                    placeholder=""
+                    type="number"
+                    value={dataFaci.faciLowPrice}
+                    onChange={eventHandler("faciLowPrice")}
+                    min={0}
+                    prefix="Rp "
+                  />
                 </Form.Item>
                 <Form.Item
                   className=""
@@ -827,16 +823,14 @@ export default function Faci() {
                       : null
                   }
                 >
-                  <div className="input-with-currency">
-                    <span className="input-currency-symbol">Rp</span>
-                    <Input
-                      placeholder=""
-                      type="number"
-                      value={dataFaci.faciRatePrice}
-                      onChange={eventHandler("faciRatePrice")}
-                      min={0}
-                    />
-                  </div>
+                  <Input
+                    placeholder=""
+                    type="number"
+                    value={dataFaci.faciRatePrice}
+                    onChange={eventHandler("faciRatePrice")}
+                    min={0}
+                    prefix="Rp "
+                  />
                 </Form.Item>
                 <Form.Item className="" label="discount">
                   <Input
@@ -850,16 +844,14 @@ export default function Faci() {
                   />
                 </Form.Item>
                 <Form.Item className="" label="facility tax rate">
-                  <div className="input-with-currency">
-                    <span className="input-currency-symbol">Rp</span>
-                    <Input
-                      placeholder=""
-                      type="number"
-                      value={dataFaci.faciTaxRate}
-                      onChange={eventHandler("faciTaxRate")}
-                      min={0}
-                    />
-                  </div>
+                  <Input
+                    placeholder=""
+                    type="number"
+                    value={dataFaci.faciTaxRate}
+                    onChange={eventHandler("faciTaxRate")}
+                    min={0}
+                    prefix="Rp "
+                  />
                 </Form.Item>
                 <Form.Item className="" label="">
                   <Input
