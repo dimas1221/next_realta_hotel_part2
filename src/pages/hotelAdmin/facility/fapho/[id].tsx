@@ -102,6 +102,7 @@ export default function Fapho() {
   const faciOne = faciHotel?.find((itemFaci: any) => itemFaci.faci_id == id);
   const [faciName, setFaciName] = useState("");
   const [faciDate, setFaciDate] = useState("");
+  const [form] = Form.useForm();
 
   useEffect(() => {
     if (faciOne) {
@@ -166,9 +167,61 @@ export default function Fapho() {
   // modalinsert
   const [modal2Open, setModal2Open] = useState(false);
 
-  // upload foto multipel
+  interface DraggableUploadListItemProps {
+    originNode: React.ReactElement<
+      any,
+      string | React.JSXElementConstructor<any>
+    >;
+    file: UploadFile<any>;
+  }
+
+  const DraggableUploadListItem = ({
+    originNode,
+    file,
+  }: DraggableUploadListItemProps) => {
+    const {
+      attributes,
+      listeners,
+      setNodeRef,
+      transform,
+      transition,
+      isDragging,
+    } = useSortable({
+      id: file.uid,
+    });
+
+    const style: React.CSSProperties = {
+      transform: CSS.Transform.toString(transform),
+      transition,
+      cursor: "move",
+    };
+
+    // prevent preview event when drag end
+    const className = isDragging
+      ? css`
+          a {
+            pointer-events: none;
+          }
+        `
+      : "";
+
+    return (
+      <div
+        ref={setNodeRef}
+        style={style}
+        className={className}
+        {...attributes}
+        {...listeners}
+      >
+        {/* hide error tooltip when dragging */}
+        {file.status === "error" && isDragging
+          ? originNode.props.children
+          : originNode}
+      </div>
+    );
+  };
+
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  console.log("fl", fileList);
   const [uploading, setUploading] = useState(false);
 
   const sensor = useSensor(PointerSensor, {
@@ -185,25 +238,64 @@ export default function Fapho() {
     }
   };
 
-  const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+  const propsUpload: UploadProps = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+
+    beforeUpload: (file, newFileList) => {
+      setFileList(newFileList);
+    },
+
+    fileList,
+    multiple: true,
+    itemRender: (originNode, file) => (
+      <DraggableUploadListItem originNode={originNode} file={file} />
+    ),
+    progress: {
+      strokeColor: {
+        "0%": "#108ee9",
+        "100%": "#87d068",
+      },
+      strokeWidth: 3,
+      format: (percent) => percent && `${parseFloat(percent.toFixed(2))}%`,
+    },
   };
 
-  const handleUpload = () => {
+  const onFinish = (values: any) => {
+    console.log(values);
+    console.log(fileList);
+
     const formData = new FormData();
-    const idFaci = faphoByOne?.fapho_faci_id;
-    // fileList.forEach((file) => {
-    //   formData.append("file[]", file as RcFile);
-    //   console.log("file", file);
-    //   console.log("formData:", Object.fromEntries(formData.entries()));
-    // });
-    fileList.map((file: any) => {
-      formData.append("file", file);
-      console.log("file", file);
+    fileList.forEach((file) => {
+      formData.append("file[]", file as RcFile);
     });
-    formData.append("faphoFaci", idFaci);
-    console.log("formData:", Object.fromEntries(formData.entries()));
+
+    formData.append("faphoFaci", faciOne.faci_id);
+    // formData.append("upload", "Multiple Upload ni Boss");
+
     setUploading(true);
+    // You can use any AJAX library you like
+    // fetch("http://localhost:3005/facility-photos/upload/firebase", {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((res) => {
+    //     // console.log(res);
+    //     setFileList([]);
+    //     message.success("upload successfully.");
+    //     // console.log("upload successfully");
+    //   })
+    //   .catch((e: any) => {
+    //     message.error("upload failed.");
+    //     console.log("upload failed");
+    //   })
+    //   .finally(() => {
+    //     setUploading(false);
+    //   });
     dispatch(doUploadFapho(formData));
     if (!dispatch) {
       message.error("gagal tambah data");
@@ -213,22 +305,8 @@ export default function Fapho() {
       message.success("upload successfully.");
       setUploading(false);
     }
-    // You can use any AJAX library you like
-    // fetch("http://localhost:3005/facility-photos/upload/firebase", {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((res) => res.json())
-    //   .then(() => {
-    //     setFileList([]);
-    //     message.success("upload successfully.");
-    //   })
-    //   .catch(() => {
-    //     message.error("upload failed.");
-    //   })
-    //   .finally(() => {
-    //     setUploading(false);
-    //   });
+
+    // handleClose(false);
   };
 
   return (
@@ -259,16 +337,23 @@ export default function Fapho() {
             title="Upload Photo"
             centered
             open={modal2Open}
-            onOk={() => setModal2Open(false)}
+            onOk={form.submit}
             onCancel={() => setModal2Open(false)}
-            footer={null}
+            okText="Upload"
+            footer={[
+              <Button key="2">Cancel</Button>,
+              <Button key="3" onClick={form.submit} type="primary">
+                Upload
+              </Button>,
+            ]}
           >
             <Form
-              layout="vertical"
-              className="bg-white p-6 rounded-lg w-3/4 mx-auto"
-              action=""
-              encType="multipart/form-data"
-              method="POST"
+              name="basic"
+              labelCol={{ span: 6 }}
+              wrapperCol={{ span: 16 }}
+              onFinish={onFinish}
+              autoComplete="off"
+              form={form}
             >
               <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
                 <SortableContext
@@ -276,31 +361,20 @@ export default function Fapho() {
                   strategy={verticalListSortingStrategy}
                 >
                   <Upload
-                    // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    fileList={fileList}
-                    onChange={onChange}
+                    multiple={true}
                     itemRender={(originNode, file) => (
                       <DraggableUploadListItem
                         originNode={originNode}
                         file={file}
                       />
                     )}
-                    multiple={true}
+                    {...propsUpload}
                   >
                     <Button icon={<UploadOutlined />}>Click to Upload</Button>
                   </Upload>
                 </SortableContext>
               </DndContext>
             </Form>
-            <Button
-              type="primary"
-              onClick={handleUpload}
-              disabled={fileList.length === 0}
-              loading={uploading}
-              style={{ marginTop: 16 }}
-            >
-              {uploading ? "Uploading" : "Start Upload"}
-            </Button>
           </Modal>
         </>
         {/* end */}
